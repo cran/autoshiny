@@ -59,12 +59,12 @@ makeCode <- function(fun, funname, withGoButton) {
                 if (class(InputVal)==.(DestinClass) && !..isFileInput(InputVal))
                     InputVal
                 else if (is.null(InputVal))
-                    .(default(.args))
+                    .(default(.formals[[getArgName(.args)]]))
                 else if (..isFileInput(InputVal))
                     .(`if`(DestinClass=='data.frame',
                            quote(read.csv(InputVal$datapath, check.names=FALSE)),
                            quote(InputVal)))
-                else .(paste0('as.',DestinClass))(InputVal)
+                else .(as.symbol(paste0('as.',DestinClass)))(InputVal)
             })
         coerceInputs <- 
             function(.args) {
@@ -76,6 +76,7 @@ makeCode <- function(fun, funname, withGoButton) {
                             .args)
             }
         .CoercedInputs <- coerceInputs(.args)
+        formals(fun) <- .formals
     }
     message('\nTest run of function ',bq(funname),
             '\nwith the default argument values...')
@@ -84,6 +85,7 @@ makeCode <- function(fun, funname, withGoButton) {
                 `if`(fun_has_args,
                      lapply(.args, default),
                      list()))
+    # formals(fun) <- .formals
     message('\nCompiling the Shiny app code...')
     returnsList <-
         withArgNames(list(Output=returns))

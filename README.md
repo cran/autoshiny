@@ -2,9 +2,11 @@ autoshiny – R package for automatic transformation of an R function into
 a Shiny app
 ================
 Aleksander Rutkowski
-2018-06-12
+2018-06-14
 
 ## Installation
+
+
 
 ``` r
 # if package `devtools` not installed, first do this:
@@ -41,7 +43,7 @@ All the arguments/parameters of the function passed to `makeApp` and
 The default values of the function arguments/parameters will be also
 used to pre-evaluate that function in order to test it and to determine
 the type of its output (return value / side effect) and, hence, the
-Shiny outut
+Shiny output
 widget.
 
 ## Examples
